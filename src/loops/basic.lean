@@ -151,18 +151,41 @@ begin
   sorry
 end
 
-lemma satisfied_or_refund {γ₀ γ₁ : E → ℝ → loop F} (h₀ : surrounding_family g b γ₀ U) :
-∃ γ : ℝ → E → ℝ → loop F, 
-  (∀ τ ∈ I, surrounding_family g b (γ τ) U) ∧ 
-  γ 0 = γ₀ ∧
-  γ 1 = γ₁ ∧
-  (∀ (τ ∈ I) (x ∈ U) (t ∈ I) s, continuous_at ↿γ (τ, x, t, s)) :=
+lemma satisfied_or_refund {γ₀ γ₁ : E → ℝ → loop F} 
+  (h₀ : surrounding_family g b γ₀ U) (h₁ : surrounding_family g b γ₁ U) :
+  ∃ γ : ℝ → E → ℝ → loop F, 
+    (∀ τ ∈ I, surrounding_family g b (γ τ) U) ∧ 
+    γ 0 = γ₀ ∧
+    γ 1 = γ₁ ∧
+    (∀ (τ ∈ I) (x ∈ U) (t ∈ I) s, continuous_at ↿γ (τ, x, t, s)) :=
 begin
-  
   sorry
 end
 
--- Manque 1.13, 1.14, 1.15
+lemma extends_loops {U₀ U₁ K₀ K₁ : set E} (hU₀ : is_open U₀) (hU₁ : is_open U₁)
+  (hK₀ : compact K₀) (hK₁ : compact K₁) (hKU₀ : K₀ ⊆ U₀) (hKU₁ : K₁ ⊆ U₁)
+  {γ₀ γ₁ : E → ℝ → loop F} 
+  (h₀ : surrounding_family g b γ₀ U₀) (h₁ : surrounding_family g b γ₁ U₁) :
+  ∃ U ∈ nhds_set (K₀ ∪ K₁), ∃ γ : E → ℝ → loop F, 
+    surrounding_family g b γ U ∧ 
+    ∀ᶠ x in nhds_set K₀, γ x = γ₀ x ∧
+    (∀ (x ∈ U) (t ∈ I) s, continuous_at ↿γ (x, t, s)) :=
+begin
+  sorry
+end
+
+lemma exists_surrounding_loops 
+  (hU : is_open U) (hK : compact K) (hKU : K ⊆ U) 
+  (hΩ_op : ∀ x ∈ U, is_open (prod.mk x ⁻¹' Ω))
+  (hΩ_conn : ∀ x ∈ U, is_connected (prod.mk x ⁻¹' Ω)) 
+  (hg : ∀ x ∈ U, smooth_at g x) (hb : ∀ x ∈ U, smooth_at b x) (hb_in : ∀ x ∈ U, (x, b x) ∈ Ω) 
+  (hgK : ∀ᶠ x in nhds_set K, g x = b x) (hconv : ∀ x ∈ U, g x ∈ convex_hull (prod.mk x ⁻¹' Ω)) :
+  ∃ γ : E → ℝ → loop F, (∀ (x ∈ U) (t ∈ I) s, (x, γ x t s) ∈ Ω ∧
+                                              γ x 0 s = b x ∧
+                                              smooth_at ↿γ ((x, t, s) : E × ℝ × ℝ)) ∧
+                        (∀ᶠ x in nhds_set K, ∀ (t ∈ I) s, γ x t s = b x)  :=
+sorry
+-- Manque 1.14, 1.15
 
 lemma exists_loops [measurable_space F] [borel_space F] 
   (hU : is_open U) (hK : compact K) (hKU : K ⊆ U) 
